@@ -33,13 +33,11 @@ def _fetch_mal_ids(config: dict, osv_updated_list: list) -> list:
 			continue
 	
 		timestamp, mal_package_cve = line.split(",")
-		ecosystem, cve = mal_package_cve.split("/")
-
 		timestamp = dateutil.parser.parse(timestamp)
 		if config["last_timestamp"] > timestamp:
 			break
 	
-		cves.append(cve)
+		cves.append(mal_package_cve)
 	config["last_timestamp"] = dateutil.parser.parse(osv_updated_list[0].split(",")[0])
 	return cves
 
