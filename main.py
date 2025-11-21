@@ -44,7 +44,7 @@ def _fetch_mal_ids(config: dict, osv_updated_list: list) -> list:
 	return cves
 
 def main() -> int:
-	parser = argparse.ArgumentParser(prog="Malicous package monitor")
+	parser = argparse.ArgumentParser(prog="Malicious package monitor")
 	parser.add_argument('config', help='Config file in yaml format')
 	args = parser.parse_args()
 
@@ -54,7 +54,7 @@ def main() -> int:
 	osv_updated_list = _fetch_osv_updated_list(config["osv"])
 	cves = _fetch_mal_ids(config, osv_updated_list)
 
-	msg = f"New malicous packages:\n\n```json\n{json.dumps(cves, indent=4)}\n```"
+	msg = f"New malicious packages:\n\n```json\n{json.dumps(cves, indent=4)}\n```"
 	bot = Bot(os.environ["BOT_TOKEN"])
 	asyncio.run(bot.send_message(config["telegram"]["channel_id"], msg, parse_mode=constants.ParseMode.MARKDOWN_V2))
 
