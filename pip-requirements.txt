@@ -1,0 +1,4 @@
+google-cloud-storage==3.6.0
+python-telegram-bot==22.5
+PyYAML==6.0.3
+python-dateutil==2.9.0.post0
