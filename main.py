@@ -52,6 +52,10 @@ def main() -> int:
 	osv_updated_list = _fetch_osv_updated_list(config["osv"])
 	cves = _fetch_mal_ids(config, osv_updated_list)
 
+	print("len(cves)", len(cves))
+	if cves == []:
+		return 0
+
 	msg = f"New malicious packages:\n\n```json\n{json.dumps(cves, indent=4)}\n```"
 	bot = Bot(os.environ["BOT_TOKEN"])
 	asyncio.run(bot.send_message(config["telegram"]["channel_id"], msg, parse_mode=constants.ParseMode.MARKDOWN_V2))
