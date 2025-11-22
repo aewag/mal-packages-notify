@@ -28,5 +28,5 @@ jobs:
       - name: Commit report changes
         run: git diff --cached --quiet || git commit -m 'Update last_timestamp'
       - name: Push commit
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: git push
