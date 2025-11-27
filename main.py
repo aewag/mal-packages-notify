@@ -2,10 +2,12 @@ import argparse
 import asyncio
 import dateutil
 from google.cloud import storage
+import itertools
 import json
 import os
 import sys
 from telegram import constants, Bot
+import time
 import yaml
 
 
@@ -56,9 +58,11 @@ def main() -> int:
 	if cves == []:
 		return 0
 
-	msg = f"New malicious packages:\n\n```json\n{json.dumps(cves, indent=4)}\n```"
-	bot = Bot(os.environ["BOT_TOKEN"])
-	asyncio.run(bot.send_message(config["telegram"]["channel_id"], msg, parse_mode=constants.ParseMode.MARKDOWN_V2))
+	for cves_batched in itertools.batched(cves, config["telegram"]["cves_batch_size"]):
+		msg = f"New malicious packages:\n\n```json\n{json.dumps(cves_batched, indent=4)}\n```"
+		bot = Bot(os.environ["BOT_TOKEN"])
+		asyncio.run(bot.send_message(config["telegram"]["channel_id"], msg, parse_mode=constants.ParseMode.MARKDOWN_V2))
+		time.sleep(1)
 
 	with open(args.config, 'w') as outfile:
 		yaml.dump(config, outfile)
