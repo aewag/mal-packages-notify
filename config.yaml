@@ -4,3 +4,4 @@ osv:
   bucket: osv-vulnerabilities
 telegram:
   channel_id: '@mal_packages'
+  cves_batch_size: 100
