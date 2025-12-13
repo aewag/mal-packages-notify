@@ -59,7 +59,7 @@ def main() -> int:
 		return 0
 
 	for cves_batched in itertools.batched(cves, config["telegram"]["cves_batch_size"]):
-		msg = f"New malicious packages:\n\n```json\n{json.dumps(cves_batched, indent=4)}\n```"
+		msg = f"Updated malicious package entries:\n\n```json\n{json.dumps(cves_batched, indent=4)}\n```"
 		bot = Bot(os.environ["BOT_TOKEN"])
 		asyncio.run(bot.send_message(config["telegram"]["channel_id"], msg, parse_mode=constants.ParseMode.MARKDOWN_V2))
 		time.sleep(1)
